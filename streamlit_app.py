@@ -192,7 +192,20 @@ data_df_normal = scaler.transform(data_df)
 
 latent_var = model1.predict(data_df_normal)
 
-model2 = tf.keras.models.load_model('model_files/keras_2.h5',compile=False)
+model2 = tf.keras.models.Sequential([
+    tf.keras.layers.Input(shape=(8,)),
+    tf.keras.layers.Dense(32, activation='relu', name='dense_15'),
+    tf.keras.layers.Dense(16, activation='relu', name='dense_16'),
+    tf.keras.layers.Dense(8, activation='relu', name='dense_17'),
+    tf.keras.layers.Dense(4, activation='relu', name='dense_18'),
+    tf.keras.layers.Dense(2, activation='relu', name='dense_19'),
+    tf.keras.layers.Dense(2, activation='linear', name='dense_20'),
+    tfp.layers.DistributionLambda(
+        make_distribution_fn=lambda t: tfd.Normal(loc=t[..., :1], scale=1e-3 + tf.math.softplus(t[..., 1:])),
+        name='distribution_lambda'
+    )
+])
+model2.load_weights('model_files/keras_2.h5')
 
 yhat = model2(latent_var)
 
