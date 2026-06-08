@@ -6,8 +6,8 @@ import time
 
 st.markdown("<body style ='color:#E2E0D9;'></body>", unsafe_allow_html=True)
 
-st.markdown("<h4 style='text-align: center; color: #1B9E91;'>House Price Prediction in Indore, MP, India</h4>", unsafe_allow_html=True)
-st.markdown("<h5 style='text-align: center; color: #1B9E91;'>Estimate the price range of houses in Indore based on area, BHK, bathrooms, and location. Built using a lightweight Scikit-Learn/NumPy model.</h5>", unsafe_allow_html=True)
+st.markdown("<h4 style='text-align: center; color: #1B9E91;'>House Price Prediction in Bengaluru, India</h4>", unsafe_allow_html=True)
+st.markdown("<h5 style='text-align: center; color: #1B9E91;'>Estimate the price range of houses in Bengaluru based on area, BHK, bathrooms, and location. Built using a lightweight Scikit-Learn/NumPy model.</h5>", unsafe_allow_html=True)
 
 # 1. Load the lightweight numpy model
 with open('model_files/indian_model.json', 'r') as f:
@@ -17,38 +17,13 @@ weights = np.array(model_data['weights'])
 top_locations = model_data['top_locations']
 std_err = model_data['std_err']
 
-# 2. Define Indore location list and map to top dataset locations
-indore_locations = [
-    "Vijay Nagar",
-    "Bypass Road",
-    "Nipania",
-    "Rajendra Nagar",
-    "Mahalaxmi Nagar",
-    "Bhanwarkuan",
-    "Sudama Nagar",
-    "Palasia",
-    "Scheme No 54",
-    "Annapurna Road",
-    "Kanadia Road",
-    "Bypass Road Phase II",
-    "LIG Colony",
-    "Scheme No 78",
-    "Nipania Phase II",
-    "Saket",
-    "Rau",
-    "Pipliyahana",
-    "Bengali Square",
-    "Nipania Phase I"
-]
-indore_to_bengaluru = dict(zip(indore_locations, top_locations))
-
-# 3. Create the input fields in the sidebar
+# 2. Create the input fields in the sidebar
 with st.sidebar:
     st.header("Property Specifications")
     
-    selected_indore_loc = st.selectbox(
-        "Select Location in Indore:",
-        options=indore_locations + ["Other"],
+    selected_loc = st.selectbox(
+        "Select Location in Bengaluru:",
+        options=top_locations + ["Other"],
         index=0
     )
     
@@ -87,7 +62,6 @@ if center_button:
         time.sleep(1.5)
 
     # Construct the feature vector
-    selected_bengaluru_loc = indore_to_bengaluru.get(selected_indore_loc, "Other")
     x = [
         1.0,  # intercept
         float(bhk),
@@ -96,7 +70,7 @@ if center_button:
         float(balcony)
     ]
     for top_loc in top_locations:
-        x.append(1.0 if selected_bengaluru_loc == top_loc else 0.0)
+        x.append(1.0 if selected_loc == top_loc else 0.0)
     
     # Calculate price prediction (in Lakhs)
     pred_lakhs = np.dot(x, weights)
