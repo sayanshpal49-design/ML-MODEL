@@ -1,8 +1,8 @@
 matplotlib
 numpy
 pandas
-scikit_learn
+scikit-learn
 streamlit
-tensorflow
-tensorflow_probability
-click==8.0.4
+tensorflow-cpu==2.15.0
+tensorflow-probability==0.23.0
+tf-keras==2.15.0
