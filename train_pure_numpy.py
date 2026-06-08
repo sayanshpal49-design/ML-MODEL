@@ -94,6 +94,15 @@ with open(csv_path, 'r', encoding='utf-8') as f:
         })
         location_counts[loc] = location_counts.get(loc, 0) + 1
 
+# Filter outliers to focus on normal residential properties (Price <= 3 Crores, Area <= 5000 sqft, BHK <= 6)
+rows = [r for r in rows if r['price'] <= 300.0 and r['sqft'] <= 5000.0 and r['bhk'] <= 6.0]
+
+# Update location counts based on filtered rows
+location_counts = {}
+for r in rows:
+    loc = r['location']
+    location_counts[loc] = location_counts.get(loc, 0) + 1
+
 # 3. Select top 20 locations
 sorted_locations = sorted(location_counts.items(), key=lambda x: x[1], reverse=True)
 top_locations = [loc for loc, count in sorted_locations[:20]]

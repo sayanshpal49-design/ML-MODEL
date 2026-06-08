@@ -100,8 +100,10 @@ if center_button:
     
     # Calculate price prediction (in Lakhs)
     pred_lakhs = np.dot(x, weights)
-    lower_lakhs = pred_lakhs - 1.96 * std_err
-    higher_lakhs = pred_lakhs + 1.96 * std_err
+    
+    # We use a proportional 15% margin of error for a realistic real estate estimation
+    lower_lakhs = pred_lakhs * 0.85
+    higher_lakhs = pred_lakhs * 1.15
     
     # Display Results
     st.markdown("<h5 style='text-align: center; color: #1B9E91;'>The price range of your house is between:</h5>", unsafe_allow_html=True)
