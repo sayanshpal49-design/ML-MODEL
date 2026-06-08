@@ -31,7 +31,7 @@ st.markdown("<body style ='color:#E2E0D9;'></body>", unsafe_allow_html=True)
 
 
 
-st.markdown("<h4 style='text-align: center; color: #1B9E91;'>House Price Prediction in Ames,Iowa</h4>", unsafe_allow_html=True)
+st.markdown("<h4 style='text-align: center; color: #1B9E91;'>House Price Prediction in Indore, MP, India</h4>", unsafe_allow_html=True)
 
 st.markdown("<h5 style='text-align: center; color: #1B9E91;'>A multi-step process is used to estimate the range of house prices based on your selection. The modeling process is done using the data found on Kaggle(link at left bottom corner of page)</h5>", unsafe_allow_html=True)
 
@@ -248,8 +248,13 @@ if center_button:
 
     col1, col2 = st.columns([3, 3])
 
-    lower_number = "{:,.2f}".format(int(yhat.mean().numpy()-1.95*yhat.stddev().numpy()))
-    higher_number = "{:,.2f}".format(int(yhat.mean().numpy()+1.95*yhat.stddev().numpy()))
+    # Convert USD prediction to INR (using exchange rate 1 USD = 83 INR)
+    usd_to_inr = 83.0
+    lower_val = int((yhat.mean().numpy() - 1.95 * yhat.stddev().numpy()) * usd_to_inr)
+    higher_val = int((yhat.mean().numpy() + 1.95 * yhat.stddev().numpy()) * usd_to_inr)
+
+    lower_number = "{:,.2f}".format(lower_val)
+    higher_number = "{:,.2f}".format(higher_val)
 
     col1, col2, col3 = st.columns(3)
 
@@ -259,10 +264,10 @@ if center_button:
         st.write("")
 
     with col2:
-        st.subheader("USD "+ str(lower_number))
+        st.subheader("Rs. "+ str(lower_number))
         st.subheader("       AND ")
 
-        st.subheader(" USD "+str(higher_number))
+        st.subheader(" Rs. "+str(higher_number))
 
 
     with col3:
