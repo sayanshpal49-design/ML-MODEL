@@ -1,5 +1,5 @@
 Nivaas: Zero-Dependency Housing Price Predictor for Bengaluru 
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/sayanshpal49-design/ML-MODEL)
+(https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/sayanshpal49-design/ML-MODEL)
 
 This is a streamlit app created by using the Ames Housing dataset on Kaggle (https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques/overview).
 
