@@ -194,6 +194,12 @@ latent_var = model1.predict(data_df_normal)
 
 model2 = tf.keras.models.Sequential([
     tf.keras.layers.Input(shape=(8,)),
+    tf.keras.layers.Dense(8, activation='linear', name='dense_9'),
+    tf.keras.layers.Dense(1024, activation='selu', name='dense_10'),
+    tf.keras.layers.Dense(512, activation='selu', name='dense_11'),
+    tf.keras.layers.Dense(256, activation='selu', name='dense_12'),
+    tf.keras.layers.Dense(128, activation='selu', name='dense_13'),
+    tf.keras.layers.Dense(64, activation='selu', name='dense_14'),
     tf.keras.layers.Dense(32, activation='relu', name='dense_15'),
     tf.keras.layers.Dense(16, activation='relu', name='dense_16'),
     tf.keras.layers.Dense(8, activation='relu', name='dense_17'),
